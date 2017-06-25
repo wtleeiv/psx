@@ -10,6 +10,7 @@
            #:add-window-resize-listener
            #:add-to-scene
            #:animate
+           #:make-sphere
            #:make-box
            ))
 

@@ -4,8 +4,6 @@
 
 (defmacro ps (&body body)
   `(progn
-     (shadow :var)
-     (use-package :parenscript)
      (ps:ps-to-stream soc:*soc* ,@body)))
 
 (ps:defpsmacro globals ()
@@ -45,6 +43,14 @@
      (request-animation-frame animate)
      ,@body
      (ps:chain renderer (render scene camera))))
+
+(ps:defpsmacro make-sphere (x y z)
+  `(progn
+     (let* ((geometry (ps:new (ps:chain *three* (*sphere-geometry 1))))
+           (material (ps:new (ps:chain *three* (*mesh-basic-material (ps:create color 0xfefefe wireframe t)))))
+           (sphere (ps:new (ps:chain *three* (*mesh geometry material)))))
+       (ps:chain sphere position (set ,x ,y ,z))
+       (ps:chain scene (add sphere)))))
 
 (ps:defpsmacro make-box (name)
   `(progn
